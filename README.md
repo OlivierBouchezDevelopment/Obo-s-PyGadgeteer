@@ -1,6 +1,6 @@
 # Obo's PyGadgeteer
 
-Welcome to the Project Name repository, a versatile collection of features designed to address a broad spectrum of specific concerns. Unlike traditional libraries, this project does not aim for distribution as a pip package. Instead, it serves as a rich repository where developers can find and reuse code snippets across various scenarios. Our goal is to provide a diverse toolkit where each feature stands independently, catering to different needs without the necessity for interconnected functionality.
+Welcome to the Obo's PyGadgeteer repository, a versatile collection of features designed to address a broad spectrum of specific concerns. Unlike traditional libraries, this project does not aim for distribution as a pip package. Instead, it serves as a rich repository where developers can find and reuse code snippets across various scenarios. Our goal is to provide a diverse toolkit where each feature stands independently, catering to different needs without the necessity for interconnected functionality.
 
 ## Current Features
 
