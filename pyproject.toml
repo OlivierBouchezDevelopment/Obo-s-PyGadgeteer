@@ -3,9 +3,9 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Obo's pygadgeteer"
+name = "Obo-s-PyGadgeteer"
 authors = [
-    {name = "Olivier Bouchez", email = "OlivierBouchezDevelopment@hotmail.com"},
+    {name = "Olivier Bouchez", email = "OlivierBouchezDevelopment@gmail.com"},
 ]
 description = "A series of usefull modules (function and classes)"
 requires-python = ">=3.8"

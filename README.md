@@ -14,6 +14,11 @@ A notable feature within the Office Toolbox is the management of Sensitivity Lab
 
 Obo's PyGadgeteer bridges this gap by leveraging pywin32 and .NET communication, offering a robust solution for applying Sensitivity Labels to Office documents. This feature is designed to work on Windows platforms with Excel or Word installed, streamlining the document management process by automating the application of Sensitivity Labels.
 
+Note:
+    Using COM is not my prefered method, 
+    I'm using it when there is no other solution. COM could have unforeseen result as it depends on the application. Sometimes a dialog or confirmation box can appear.
+    I always use the application Visible state, so I can adjust when I see the dialog message from the application. 
+
 ### Getting Started
 
 #### Prerequisites
