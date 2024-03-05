@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Obo's pygadgeteer"
+authors = [
+    {name = "Olivier Bouchez", email = "OlivierBouchezDevelopment@hotmail.com"},
+]
+description = "A series of usefull modules (function and classes)"
+requires-python = ">=3.8"
+keywords = ["project","framework"]
+license = {file = "LICENSE.txt"}
+classifiers = [
+      "Development Status :: 3 - Alpha",
+      "Intended Audience :: Developers",
+      "Topic :: Software Development :: Build Tools",
+      "License :: OSI Approved :: MIT License",
+
+]
+
+# this dependencies are set for project dev, and documentation
+dependencies = [
+    "sphinx","sphinx_rtd_theme", "build", "myst_parser", "pytest", "esbonio", 
+]
+readme = "README.md"
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+where = ["pygadgeteer"]  # list of folders that contain the packages (["."] by default)
+include = ["*"]  # package names should match these glob patterns (["*"] by default)
+exclude = []  # exclude packages matching these glob patterns (empty by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
+
+[tool.setuptools]
+# ...
+# By default, include-package-data is true in pyproject.toml, so you do
+# NOT have to specify this line.
+include-package-data = true
+
+[tool.setuptools_scm]
