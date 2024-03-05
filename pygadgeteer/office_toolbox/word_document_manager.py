@@ -1,4 +1,5 @@
 import logging
+import os
 from typing import Optional
 
 import pythoncom
@@ -29,6 +30,45 @@ class WordDocumentManager(AbstractDocumentManager):
         super().__init__(filename)
         # Initialize the Word application COM object with automatic COM threading model initialization.
         self.app = Dispatch("Word.Application", pythoncom.CoInitialize())
+
+    def save_as_document(self, filename: str, *argv, **kwargs):
+        """
+        Saves the current document under a new name, handling the differences between Excel and Word save methods.
+
+        This method abstracts the discrepancies between Excel's `SaveAs` and Word's `SaveAs2` methods, allowing for
+        a unified interface to save documents in both applications. If the specified file already exists, it is
+        overwritten without prompting. This method adjusts for Word's requirement by using `SaveAs2`, ensuring
+        compatibility and enabling the passing of additional arguments and keyword arguments specific to each application's
+        save method.
+
+        Args:
+            filename (str): The path, including the name of the file, where the document will be saved. If a file with
+                            the same name exists, it will be overwritten.
+            *argv: Variable length argument list passed directly to the Excel `SaveAs` or Word `SaveAs2` method,
+                allowing for application-specific save options (e.g., file format or password protection).
+            **kwargs: Arbitrary keyword arguments passed directly to the Excel `SaveAs` or Word `SaveAs2` method,
+                    supporting a wide range of saving options specific to each application.
+
+        Returns:
+            The result of the save operation, typically `None` unless the underlying method provides a return value.
+
+        Raises:
+            Various exceptions can be raised depending on the application and the arguments provided. Common issues
+            include COM errors due to invalid file paths or permissions, and application-specific errors related to
+            save options.
+
+        Note:
+            This method does not distinguish between Excel and Word internally; it uses `SaveAs2` universally,
+            which is intended for Word but may work with Excel in some contexts. Ensure compatibility with your
+            specific use case and Office application version.
+        """
+        self.filename = filename
+        if os.path.exists(filename):
+            # the file exists.. Is there an option to force writing over an empty doc with SaveAs2 ?
+            os.remove(filename)
+
+        if self._document:
+            return self._document.SaveAs2(filename, *argv, **kwargs)
 
     def open_document(self, visible: bool = True) -> Optional[CDispatch]:
         """

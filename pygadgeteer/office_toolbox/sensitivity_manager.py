@@ -16,6 +16,8 @@ class SensitivityLabelManager:
         document (CDispatch): The Office Document document object this manager operates on.
     """
 
+    # shttps://learn.microsoft.com/fr-fr/office/vba/api/office.sensitivitylabel.createlabelinfo
+
     def __init__(self, document: CDispatch):
         """
         Initializes SensitivityLabelManager with an Office Document document.
@@ -42,6 +44,7 @@ class SensitivityLabelManager:
         Returns:
             CDispatch: A new LabelInfo COM object for sensitivity label assignment.
         """
+        # https://learn.microsoft.com/fr-fr/office/vba/api/office.sensitivitylabel.createlabelinfo
         return self.sensitivitylabel.CreateLabelInfo()
 
     def getlabel(self) -> CDispatch:
@@ -68,6 +71,7 @@ class LabelInfoManager:
     Manages and inspects LabelInfo objects for sensitivity labels.
     """
 
+    # https://learn.microsoft.com/fr-fr/office/vba/api/office.labelinfo
     def __init__(self, labelinfo: CDispatch):
         """
         Initializes LabelInfoManager with a LabelInfo COM object.

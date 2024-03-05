@@ -13,6 +13,7 @@ from office_toolbox.sensitivity_manager import SensitivityLabelManager, LabelInf
 from office_toolbox.set_sensitivity_label import (
     create_sensitivity_label_definition,
     set_sensitivity_label_to_file,
+    set_sensitivity_label_to_document,
     DEFAULT_SENSITIVITY_TEMPLATES,
     DEFAULT_SENSITIVITY_LABELS_DEFINITION,
 )
@@ -22,6 +23,10 @@ def demo_show_label_info():
     """
     This demo function iterates through a list of filenames and their corresponding sensitivity labels.
     It opens each document, retrieves its current sensitivity label, and prints the label information.
+
+    note: the code between demo_excel_sensitivity_manager and demo_word_sensitivity_manager are redundant, for demo purpose,
+          but in fact they are similar similar (the file extension makes the difference).
+          classes and factory will adapt to a Word or an Excel document
     """
     document_manager = None
     for filename, sensitivity in [
@@ -32,7 +37,7 @@ def demo_show_label_info():
         ("output/dummy_restricted_sensitive.docx", "RestrictedSensitive"),
     ]:
         print(f"{filename = },{sensitivity = }")
-        fullpath = os.path.join(os.getcwd(), filename)
+        fullpath = os.path.abspath(filename)
         document_manager = document_manager_factory(fullpath)
         if document_manager.document is None:
             continue
@@ -50,6 +55,10 @@ def demo_set_sensitivity():
     """
     This demo function iterates through a list of filenames and their corresponding sensitivity labels.
     It copies a dummy document to each filename and sets the specified sensitivity label to the copied document.
+
+    note: the code between demo_excel_sensitivity_manager and demo_word_sensitivity_manager are redundant, for demo purpose,
+        but in fact they are similar similar (the file extension makes the difference).
+        classes and factory will adapt to a Word or an Excel document
     """
     for filename, sensitivity in [
         ("output/dummy_internal_use_only.docx", "InternalUseOnly"),
@@ -62,10 +71,35 @@ def demo_set_sensitivity():
         shutil.copy(
             "output/dummy.docx", filename
         )  # Copy a dummy file to the target filename.
-        fullpath = os.path.join(os.getcwd(), filename)
+        fullpath = os.path.abspath(filename)
         set_sensitivity_label_to_file(
             fullpath, sensitivity
         )  # Apply the sensitivity label.
+
+
+def demo_create_document():
+    """
+    This demo create a document and set the Sensitivity Level
+
+    note: the code between demo_excel_sensitivity_manager and demo_word_sensitivity_manager are redundant, for demo purpose,
+        but in fact they are similar similar (the file extension makes the difference).
+        classes and factory will adapt to a Word or an Excel document
+    """
+    # In fact, the code is exactly the same for a docx ... Just change the extension below
+    filename = "output/dummy_new.docx"
+    fullpath = os.path.abspath(filename)
+    document_manager = document_manager_factory(fullpath)
+    document_manager.create_document()
+    set_sensitivity_label_to_document(document_manager, "InternalUseOnly")
+    document_manager.close_document()
+    document_manager = document_manager_factory(fullpath)
+    if document_manager.document:
+        sensitivity_manager = SensitivityLabelManager(document_manager.document)
+        label_info = LabelInfoManager(sensitivity_manager.getlabel()).dump_info()
+        print(filename)
+        print(json.dumps(label_info, indent=4, ensure_ascii=False))
+    else:
+        print(f"Strange the file is not availble {filename} {fullpath =}")
 
 
 def demo_initialize():
@@ -78,6 +112,8 @@ def demo_initialize():
     =========================================
     create with Word a few documents that serves as template for capturing sensitivity_label ids
     nb: it could be xlsx documents too
+    You can initialize with excel or work, the configuration is common
+    You have to initialize the first time, than the JSON file can be used for further call
 
     As for example
     --------------
@@ -114,6 +150,9 @@ if __name__ == "__main__":
 
     # Finally, show the label info for the documents to verify that the labels were correctly set.
     demo_show_label_info()
+
+    # Show creation of an empty document with Sensitivity Label
+    demo_create_document()
 
 # Tips for Beginners:
 # - Make sure to follow the setup instructions carefully.

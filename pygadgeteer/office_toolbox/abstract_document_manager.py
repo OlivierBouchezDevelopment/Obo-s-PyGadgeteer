@@ -51,6 +51,15 @@ class AbstractDocumentManager(ABC):
             The newly created document COM object.
         """
 
+    @abstractmethod
+    def save_as_document(self, filename: str, *argv, **kwargs):
+        """
+        Give access to the save as method for a file
+        excel: self._document.SaveAs(filename, *argv, **kwargs)
+        word: self._document.SaveAs2(filename, *argv, **kwargs)
+        """
+        self.filename = filename
+
     def save_document(self) -> None:
         """
         Saves the document. If the document is new, uses SaveAs2 to specify the filename;
@@ -59,7 +68,9 @@ class AbstractDocumentManager(ABC):
         try:
             if self._document:
                 if self._new_document:
-                    self._document.SaveAs2(self.filename)
+                    self.save_as_document(
+                        self.filename
+                    )  # or self._document.SaveAs2(self.filename)
                 else:
                     self._document.Save()
         except pythoncom.com_error as error:
