@@ -1,61 +1,49 @@
-# Obo's PyGadgeteer
+# Sensitivity Label Management
 
-## Overview
+## Current Features
 
-Obo's PyGadgeteer is a versatile Python library designed to aggregate a variety of modules and classes to support an extensive range of use cases. This project serves as a comprehensive toolbox, offering both reusable code snippets and fully integrated solutions for diverse projects. Our goal is to provide a collection of tools that deliver general functionalities, enhancing productivity and efficiency for developers working across different domains.
+- **Sensitivity Label Management**: A feature designed to help manage and apply sensitivity labels to your data, ensuring appropriate handling and protection according to its classification. [SensitivityLabelManager.md](doc:SensitivityLabelManager.md)
 
-## Features
+## Getting Started
 
-### Office Toolbox
-Our Office Toolbox offers a suite of routines aimed at simplifying interactions with Office documents. This includes, but is not limited to, creating, manipulating, and managing sensitivity labels within Office files.
+To get started with our project, we recommend the following steps:
 
-#### Sensitivity Label Management
-A notable feature within the Office Toolbox is the management of Sensitivity Labels for Office documents. Sensitivity Labels are widely used in various organizations to classify documents with tags such as "Public", "Internal Use Only", and "Commercial in Confidence". While tools like openpyxl facilitate the creation of Excel documents from Python, they do not inherently support the management of Sensitivity Labels.
+1. **Clone the Repository**: Clone this repository to your local machine to have access to all the available features.
 
-Obo's PyGadgeteer bridges this gap by leveraging pywin32 and .NET communication, offering a robust solution for applying Sensitivity Labels to Office documents. This feature is designed to work on Windows platforms with Excel or Word installed, streamlining the document management process by automating the application of Sensitivity Labels.
+    ```
+    git clone <repository-url>
+    ```
 
-Note:
-    Using COM is not my prefered method, 
-    I'm using it when there is no other solution. COM could have unforeseen result as it depends on the application. Sometimes a dialog or confirmation box can appear.
-    I always use the application Visible state, so I can adjust when I see the dialog message from the application. 
+2. **Explore the Code**: Dive into the individual features within the repository. Each feature is designed to be self-contained, so you can easily understand and extract the code you need for your own projects.
 
-### Getting Started
+3. **Utilize the Documentation**: Detailed documentation is embedded within the codebase, employing docstrings to explain the functionality and usage of each feature. To generate and view this documentation locally, follow the steps below:
 
-#### Prerequisites
-Windows OS with Excel or Word installed.
-Python with pywin32 library.
+    - **Build HTML Documentation**: Use the `build_docs.bat` script to generate HTML documentation from the codebase's docstrings.
 
-#### Installation
-To use Obo's PyGadgeteer, ensure you have Python installed on your system along with the pywin32 library:
+        ```
+        .\script\build_docs.bat
+        ```
 
-```bash
-pip install pywin32
-```
+    - **Serve Documentation Locally**: To view the generated documentation in your browser, start a local documentation server with `doc_server.bat`.
 
-#### Demonstrations
-Two demonstration scripts are provided to showcase the functionality of our Sensitivity Label management:
+        ```
+        .\script\doc_server.bat
+        ```
 
-- `demo_excel_sensitivity_manager`
-- `demo_word_sensitivity_manager`
-  
-These demos illustrate how to apply Sensitivity Labels to Excel and Word documents, respectively.
+4. **Optional: Build Package**: While the project is not intended for pip distribution, you can still package it into a wheel file using `build_package.bat` if needed for specific scenarios.
 
-#### Usage
-First, create a *sensitivity_labels_definition.json* file to map each Sensitivity Label to a corresponding LabelId and LabelName:
+    ```
+    .\script\build_package.bat
+    ```
 
-```python
-from office_toolbox.set_sensitivity_label import (
-    create_sensitivity_label_definition,
-    set_sensitivity_label_to_file
-)
-```
+## Contributing
 
-- `create_sensitivity_label_definition`: Scans a directory of "template" files to generate a configuration file mapping labels to their properties.
-- `set_sensitivity_label_to_file`: Applies the specified Sensitivity Label to a document.
+Your contributions are welcome! If you have ideas for new features or improvements, please feel free to fork the repository, make your changes, and submit a pull request.
 
-#### Architecture
-Under the hood, document_manager_factory creates instances of ExcelDocumentManager or WordDocumentManager, each an implementation of AbstractDocumentManager. These managers are designed to interact with the .NET framework, directly manipulating documents within Excel or Word applications.
+## License
 
-## Future Directions
-We are committed to continuously enhancing Obo's PyGadgeteer with new features and improvements. Feedback and contributions from the community are highly welcomed as we strive to build a robust and versatile toolbox for developers.
+Specify your project's license here.
 
+---
+
+This README.md file provides a concise overview of your project, how to get started, and how to contribute. Adjust the sections as your project evolves or as you add more features.

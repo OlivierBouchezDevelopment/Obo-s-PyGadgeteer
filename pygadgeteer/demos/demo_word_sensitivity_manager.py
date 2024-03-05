@@ -73,7 +73,7 @@ def demo_set_sensitivity():
         )  # Copy a dummy file to the target filename.
         fullpath = os.path.abspath(filename)
         set_sensitivity_label_to_file(
-            fullpath, sensitivity
+            absolute_path_to_filename=fullpath, sensitivity_label=sensitivity
         )  # Apply the sensitivity label.
 
 
