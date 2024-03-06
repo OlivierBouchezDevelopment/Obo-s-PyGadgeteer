@@ -8,7 +8,9 @@ Subpackages
    :maxdepth: 4
 
    pygadgeteer.demos
+   pygadgeteer.json_toolbox
    pygadgeteer.office_toolbox
+   pygadgeteer.openpyxl_toolbox
 
 Module contents
 ---------------

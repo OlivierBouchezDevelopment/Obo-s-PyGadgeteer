@@ -118,6 +118,12 @@ def create_sensitivity_label_definition(
         sensitivity_label_definition[label] = {
             "LabelId": label_info_manager.labelinfo.LabelId,
             "LabelName": label_info_manager.labelinfo.LabelName,
+            "IsEnabled": label_info_manager.labelinfo.IsEnabled,
+            "SetDate": label_info_manager.labelinfo.SetDate,
+            "AssignmentMethod": label_info_manager.labelinfo.AssignmentMethod,
+            "SiteId": label_info_manager.labelinfo.SiteId,
+            "ActionId": label_info_manager.labelinfo.ActionId,
+            "ContentBits": label_info_manager.labelinfo.ContentBits,
         }
 
         document_manager.close_document(save=False)
