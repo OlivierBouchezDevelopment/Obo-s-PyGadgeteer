@@ -12,6 +12,14 @@ pygadgeteer.demos.demo\_excel\_sensitivity\_manager module
    :undoc-members:
    :show-inheritance:
 
+pygadgeteer.demos.demo\_excel\_sensitivity\_with\_openpyxl module
+-----------------------------------------------------------------
+
+.. automodule:: pygadgeteer.demos.demo_excel_sensitivity_with_openpyxl
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pygadgeteer.demos.demo\_word\_sensitivity\_manager module
 ---------------------------------------------------------
 

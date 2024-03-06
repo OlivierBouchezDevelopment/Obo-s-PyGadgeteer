@@ -50,6 +50,14 @@ pip install openpyxl
 ## Step 1: Define Sensitivity Labels
 
 First, we define our sensitivity labels. In a larger application, this might involve reading definitions from a file or database. For simplicity, we'll assume this step is abstracted by the `create_sensitivity_label_definition()` function.
+My method is to create a folder `sensitivity_model` that contains a series of files such
+- InternalUseOnly.xlsx
+- Public.xlsx
+- CommercialInConfidence.xlsx
+  
+Each of these files having the Sensitivity Label set accordingly.
+`create_sensitivity_label_definition()` will loop through this file to capture the property value associated with the different levels. It will create a Json files that can be use for further reference.
+
 
 ## Step 2: Apply Labels to Workbooks
 
@@ -58,28 +66,43 @@ Next, we iterate through our defined labels, creating a new Excel workbook for e
 ### Example Code
 
 Here's a simplified script outline demonstrating the core functionality:
+see `pygadgeteer\demos\demo_excel_sensitivity_with_openpyxl.py`
 
 ```python
 from openpyxl import Workbook
-from your_label_module import create_sensitivity_label_definition, get_label_from_file, set_label_to_workbook
+from openpyxl_toolbox.sensitivity_manager import create_sensitivity_label_definition, get_label_from_file, set_label_to_workbook, MSIP_Configuration
 
 if __name__ == "__main__":
-    # Step 1: Create or load sensitivity label definitions
+    # use this line to create a configuration json file from a series of models
+    """
+    default value
+    DEFAULT_SENSITIVITY_LABELS_DEFINITION = "sensitivity_model/sensitivity_labels_definition_with_openpyxl.json"
+    DEFAULT_SENSITIVITY_TEMPLATES = "sensitivity_model"
+    """
     msip_configuration = create_sensitivity_label_definition()
 
-    # Step 2: Apply each label to a new workbook and save it
+    # use this to load the json configuration
+    msip_configuration = MSIP_Configuration().load()
+
     for label_name in msip_configuration.labels():
         test_filename = f"output/dummy_openpyxl_{label_name}.xlsx"
         wb = Workbook()
         label = msip_configuration.get_sensitivity_label(label_name)
         set_label_to_workbook(wb, label)
         wb.save(test_filename)
+        print(
+            f"""
+{test_filename} is created with a Sensitivity Label ({label_name})"""
+        )
 
-        # Step 3: Verify the label was applied correctly
         check_label = get_label_from_file(test_filename)
-        assert check_label is not None, "Label was not found in the workbook."
-        assert label.LabelId == check_label.LabelId, "Label ID does not match."
-        assert label.LabelName == check_label.LabelName, "Label Name does not match."
+        assert check_label is not None
+        assert label.LabelId == check_label.LabelId
+        assert label.LabelName == check_label.LabelName
+        print(
+            f"{test_filename} is correctly assigned a Sensitivity Label ({label_name})"
+        )
+
 ```
 
 ## Step 3: Verify Label Application

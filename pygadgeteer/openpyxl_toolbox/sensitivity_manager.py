@@ -251,18 +251,3 @@ def set_label_to_file(filename: str, label: MSIP_Label):
     wb = load_workbook(filename)
     set_label_to_workbook(wb, label)
     wb.save(filename)
-
-
-if __name__ == "__main__":
-    msip_configuration = create_sensitivity_label_definition()
-    for label in msip_configuration.labels():
-        test_filename = f"output/dummy_openpyxl_{label}.xlsx"
-        wb = Workbook()
-        label = msip_configuration.get_sensitivity_label(label)
-        set_label_to_workbook(wb, label)
-        wb.save(test_filename)
-
-        check_label = get_label_from_file(test_filename)
-        assert check_label is not None
-        assert label.LabelId == check_label.LabelId
-        assert label.LabelName == check_label.LabelName
